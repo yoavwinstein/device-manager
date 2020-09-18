@@ -24,5 +24,6 @@ public:
 };
 
 void RPCCheck(RPC_STATUS status);
+void COMCheck(HRESULT result);
 
 }

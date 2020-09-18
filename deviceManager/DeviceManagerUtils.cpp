@@ -1,4 +1,5 @@
 #include "DeviceManagerUtils.h"
+#include <comdef.h>
 
 
 namespace DeviceManagerUtils {
@@ -29,6 +30,12 @@ RPCException::RPCException(RPC_STATUS status) : value(status) {}
 void RPCCheck(RPC_STATUS status) {
     if (status != 0) {
         throw RPCException(status);
+    }
+}
+
+void COMCheck(HRESULT result) {
+    if (FAILED(result)) {
+        throw _com_error(result);
     }
 }
 
