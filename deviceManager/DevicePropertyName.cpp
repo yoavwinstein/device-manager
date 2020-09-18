@@ -122,5 +122,5 @@ std::optional<std::wstring> getDevicePropertyKeyName(const DEVPROPKEY& propertyK
     if (iter != s_devicePropertyKeyNamesTable.end()) {
         return iter->second;
     }
-    return L"Unknown";
+    return std::nullopt;
 }
