@@ -10,9 +10,15 @@
 size_t s_indent = 0;
 class IndentGuard {
 public:
-    IndentGuard() { s_indent += 2; }
+    IndentGuard() {
+        s_indent += 2;
+        std::cout << "  ";
+    }
     IndentGuard(const IndentGuard&) { s_indent += 2; }
-    ~IndentGuard() { s_indent -= 2; }
+    ~IndentGuard() {
+        s_indent -= 2;
+        std::cout << "\r" << std::string(s_indent, ' ');
+    }
 };
 
 template <typename T>
@@ -156,16 +162,13 @@ void free_printer(DeviceNode& devNode) {
     std::cout << endlind << "Properties:" << endlind;
     IndentGuard g;
     free_printer(devicePropetriesMap);
-    
+    std::cout << endlind;
 }
-using MyTest = std::variant<int, std::monostate>;
 
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
 template<class... Ts> overloaded(Ts...)->overloaded<Ts...>;
 
 int main() {
-    DeviceManagerUtils::COMCheck(CoInitializeEx(nullptr, COINIT_MULTITHREADED));
-
     using StackMember = std::variant<DeviceNode, IndentGuard>;
     std::stack<StackMember> stack;
     stack.push(DeviceNode::rootDevice());
