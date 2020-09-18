@@ -2,11 +2,10 @@
 #include "Printing.h"
 #include "JsonSerialization.h"
 #include <stack>
+#include <cpprest/json.h>
 
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
 template<class... Ts> overloaded(Ts...)->overloaded<Ts...>;
-
-#include <cpprest/json.h>
 
 void jsonPrint() {
     web::json::value serializedDeviceTree;
