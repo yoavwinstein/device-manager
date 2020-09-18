@@ -157,6 +157,7 @@
     <ClCompile Include="DevicePropertyKey.cpp" />
     <ClCompile Include="DevicePropertyName.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Printing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -167,6 +168,7 @@
     <ClInclude Include="DevicePropertyData.h" />
     <ClInclude Include="DevicePropertyKey.h" />
     <ClInclude Include="DevicePropertyName.h" />
+    <ClInclude Include="Printing.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
