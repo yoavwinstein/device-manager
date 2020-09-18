@@ -7,14 +7,14 @@ DeviceNode DeviceNode::rootDevice() {
     return root;
 }
 
-std::tuple<ULONG, ULONG> DeviceNode::statusAndProblem() {
+std::tuple<ULONG, ULONG> DeviceNode::statusAndProblem() const {
     ULONG status{};
     ULONG problem{};
     DeviceManagerUtils::CMCheck(CM_Get_DevNode_Status(&status, &problem, m_deviceInstance, 0));
     return { status, problem };
 }
 
-std::vector<DeviceNode> DeviceNode::children() {
+std::vector<DeviceNode> DeviceNode::children() const {
     std::vector<DeviceNode> returnValue;
     DEVINST currentChild{};
     DEVINST nextChild{};
@@ -30,7 +30,7 @@ std::vector<DeviceNode> DeviceNode::children() {
     return returnValue;
 }
 
-std::vector<DevicePropertyKey> DeviceNode::properties() {
+std::vector<DevicePropertyKey> DeviceNode::properties() const {
     std::vector<DevicePropertyKey> returnValue{};
 
     ULONG propertiesLength{};

@@ -156,8 +156,10 @@
     <ClCompile Include="DeviceManagerUtils.cpp" />
     <ClCompile Include="DevicePropertyKey.cpp" />
     <ClCompile Include="DevicePropertyName.cpp" />
+    <ClCompile Include="JsonSerialization.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Printing.cpp" />
+    <ClCompile Include="SerializationCommon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -168,7 +170,9 @@
     <ClInclude Include="DevicePropertyData.h" />
     <ClInclude Include="DevicePropertyKey.h" />
     <ClInclude Include="DevicePropertyName.h" />
+    <ClInclude Include="JsonSerialization.h" />
     <ClInclude Include="Printing.h" />
+    <ClInclude Include="SerializationCommon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,9 +13,9 @@ public:
 
     static DeviceNode rootDevice();
 
-    std::tuple<ULONG, ULONG> statusAndProblem();
-    std::vector<DeviceNode> children();
-    std::vector<DevicePropertyKey> properties();
+    std::tuple<ULONG, ULONG> statusAndProblem() const;
+    std::vector<DeviceNode> children() const;
+    std::vector<DevicePropertyKey> properties() const;
 
 private:
     DeviceNode(DEVINST deviceInstance);

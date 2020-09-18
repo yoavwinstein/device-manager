@@ -1,7 +1,7 @@
 #include "Printing.h"
 #include "DevicePropertyData.h"
 #include "DevicePropertyKey.h"
-#include "DeviceManagerUtils.h"
+#include "SerializationCommon.h"
 #include <iostream>
 #include <string>
 #include <map>
@@ -36,18 +36,6 @@ template <class _Elem, class _Traits>
 static std::basic_ostream<_Elem, _Traits>& endlind(
     std::basic_ostream<_Elem, _Traits>& _Ostr) {
     return _Ostr << std::endl << indent<_Elem>();
-}
-
-static std::map<std::wstring, DevicePropertyData> getPropertyMap(std::vector<DevicePropertyKey>& properties) {
-
-    std::map<std::wstring, DevicePropertyData> returnValue;
-    for (auto& prop : properties) {
-        auto propName = prop.getPropertyName();
-        auto propValue = prop.getPropertyValue();
-
-        returnValue[propName] = propValue;
-    }
-    return returnValue;
 }
 
 static void hex_print(const void* base, size_t size) {
@@ -88,11 +76,7 @@ static void free_printer(const std::vector<BYTE>& value) {
 }
 
 static void free_printer(const GUID& value) {
-    RPC_WSTR rpcStr{};
-    DeviceManagerUtils::RPCCheck(UuidToString(&value, &rpcStr));
-    std::wstring nameStr = reinterpret_cast<wchar_t*>(rpcStr);
-    DeviceManagerUtils::RPCCheck(RpcStringFree(&rpcStr));
-    free_printer(L"{" + nameStr + L"}");
+    free_printer(guidToString(value));
 }
 
 static void free_printer(const std::monostate&) {
@@ -137,9 +121,7 @@ static std::vector<std::wstring> s_excludedDevicePropertyKeys = {
 static void free_printer(const std::map<std::wstring, DevicePropertyData>& value) {
     IndentGuard g;
     for (const auto& val : value) {
-        if (std::find(s_excludedDevicePropertyKeys.begin(),
-            s_excludedDevicePropertyKeys.end(),
-            val.first) != s_excludedDevicePropertyKeys.end()) {
+        if (isExcludedDevicePropertyKey(val.first)) {
             continue;
         }
         std::wcout << val.first << ": ";
