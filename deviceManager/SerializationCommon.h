@@ -8,3 +8,4 @@ std::map<std::wstring, DevicePropertyData> getPropertyMap(std::vector<DeviceProp
 
 bool isExcludedDevicePropertyKey(const std::wstring& devicePropertyKey);
 std::wstring guidToString(const GUID& guid);
+std::wstring getTimeFormatted(const FILETIME& fileTime);

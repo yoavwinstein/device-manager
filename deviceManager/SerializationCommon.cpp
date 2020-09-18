@@ -1,5 +1,7 @@
 #include "SerializationCommon.h"
 #include "DeviceManagerUtils.h"
+#include <iomanip>
+#include <sstream>
 
 std::map<std::wstring, DevicePropertyData> getPropertyMap(std::vector<DevicePropertyKey>& properties) {
 
@@ -31,4 +33,16 @@ std::wstring guidToString(const GUID& guid) {
     std::wstring nameStr = reinterpret_cast<wchar_t*>(rpcStr);
     DeviceManagerUtils::RPCCheck(RpcStringFree(&rpcStr));
     return L"{" + nameStr + L"}";
+}
+
+std::wstring getTimeFormatted(const FILETIME& fileTime) {
+    SYSTEMTIME sysTime{};
+    DeviceManagerUtils::WIN32Check(FileTimeToSystemTime(&fileTime, &sysTime));
+    std::wostringstream sstr;
+    auto width2 = std::setw(2);
+    // Format is as following: "yyyy/mm/dd hh:mm::ss"
+    sstr << std::setfill(L'0') << width2 << sysTime.wMonth << L"/" << width2 << sysTime.wDay << L"/" << sysTime.wYear;
+    sstr << L" ";
+    sstr << width2 << sysTime.wHour << L":" << width2 << sysTime.wMinute << L":" << width2 << sysTime.wSecond;
+    return sstr.str();
 }

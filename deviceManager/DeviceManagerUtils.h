@@ -23,7 +23,13 @@ public:
     RPC_STATUS value;
 };
 
+class Win32Exception {
+public:
+    Win32Exception();
+    DWORD error;
+};
+
 void RPCCheck(RPC_STATUS status);
-void COMCheck(HRESULT result);
+void WIN32Check(BOOL isSuccess);
 
 }

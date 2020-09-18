@@ -1,5 +1,6 @@
 #include "JsonSerialization.h"
 #include "SerializationCommon.h"
+#include "DeviceManagerUtils.h"
 #include <iomanip>
 #include <sstream>
 
@@ -65,8 +66,7 @@ static void json_serialize(web::json::value& obj, const DOUBLE& value) {
 }
 
 static void json_serialize(web::json::value& obj, const FILETIME& value) {
-    // TODO: Format time
-    obj = web::json::value(hexify(value));
+    obj = web::json::value(getTimeFormatted(value));
 }
 
 static void json_serialize(web::json::value& obj, const FailureType& value) {
@@ -97,5 +97,8 @@ void json_serialize(web::json::value& obj, const DeviceNode& devNode) {
     json_serialize(obj[L"status"], status);
     json_serialize(obj[L"problem"], problem);
     json_serialize(obj[L"properties"], propertiesMap);
-    json_serialize(obj[L"children"], devNode.children());
+    auto children = devNode.children();
+    if (!children.empty()) {
+        json_serialize(obj[L"children"], devNode.children());
+    }
 }

@@ -26,9 +26,18 @@ void CMCheck(CONFIGRET value) {
 
 RPCException::RPCException(RPC_STATUS status) : value(status) {}
 
+
+Win32Exception::Win32Exception() : error(GetLastError()) {}
+
 void RPCCheck(RPC_STATUS status) {
     if (status != 0) {
         throw RPCException(status);
+    }
+}
+
+void WIN32Check(BOOL isSuccess) {
+    if (!isSuccess) {
+        throw Win32Exception();
     }
 }
 

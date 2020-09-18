@@ -100,8 +100,7 @@ static void free_printer(const DOUBLE& value) {
 }
 
 static void free_printer(const FILETIME& value) {
-    // TODO: Format time
-    hex_print(value);
+    free_printer(getTimeFormatted(value));
 }
 
 static void free_printer(const FailureType& value) {
