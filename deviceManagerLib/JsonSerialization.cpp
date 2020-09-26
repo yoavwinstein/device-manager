@@ -97,8 +97,5 @@ void json_serialize(web::json::value& obj, const DeviceNode& devNode) {
     json_serialize(obj[L"status"], status);
     json_serialize(obj[L"problem"], problem);
     json_serialize(obj[L"properties"], propertiesMap);
-    auto children = devNode.children();
-    if (!children.empty()) {
-        json_serialize(obj[L"children"], devNode.children());
-    }
+    json_serialize(obj[L"children"], devNode.children());
 }

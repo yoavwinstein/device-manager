@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap mp">
+  
+
+  <Identity
+    Name="c73d2331-abbf-49b2-b069-d3e96b22131b"
+    Publisher="CN=Yoav"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="c73d2331-abbf-49b2-b069-d3e96b22131b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>deviceManagerUI</DisplayName>
+    <PublisherDisplayName>Yoav</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application
+      Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="deviceManagerUI.App">
+      <uap:VisualElements
+        DisplayName="deviceManagerUI"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png"
+        Description="deviceManagerUI"
+        BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="dmjson">
+            <uap:SupportedFileTypes>
+              <uap:FileType ContentType="application/json">.dmjson</uap:FileType>
+            </uap:SupportedFileTypes>
+            <uap:DisplayName>Device Manager JSON File</uap:DisplayName>
+            <uap:Logo>Assets\usb.png</uap:Logo>
+            <uap:InfoTip>Device Manager JSON File</uap:InfoTip>
+          </uap:FileTypeAssociation>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="broadFileSystemAccess" />
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
