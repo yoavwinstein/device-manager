@@ -86,8 +86,10 @@ void App::OnNavigationFailed(IInspectable const&, NavigationFailedEventArgs cons
     throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
 }
 
-void App::OnFileActivated(Windows::ApplicationModel::Activation::IFileActivatedEventArgs const& args)
+void App::OnFileActivated(Windows::ApplicationModel::Activation::FileActivatedEventArgs const& args)
 {
+    super::OnFileActivated(args);
+
     if (args.Files().Size() == 1) {
         auto file = args.Files().GetAt(0);
         
@@ -95,12 +97,25 @@ void App::OnFileActivated(Windows::ApplicationModel::Activation::IFileActivatedE
         
         readTextPromise.Completed([](auto strPromise, winrt::AsyncStatus status) {
             
-            auto result = strPromise.get();
-            std::string str;
-            str.resize(result.Length());
-            memcpy(str.data(), result.data(), result.Length());
-            winrt::Microsoft::ReactNative::JSValue value(str);
-            dispatchFileActivationEvent(value);
+            if (status == winrt::AsyncStatus::Completed) {
+                auto result = strPromise.get();
+                std::string str;
+                str.resize(result.Length());
+                memcpy(str.data(), result.data(), result.Length());
+                winrt::Microsoft::ReactNative::JSValue value(str);
+                dispatchFileActivationEvent(value);
+            }
         });
+
+    }
+
+    if (Window::Current().Content() == nullptr) {
+        Host().ReloadInstance();
+        Frame rootFrame;
+        Window::Current().Content(rootFrame);
+        if (!rootFrame.Navigate(xaml_typename<deviceManagerUI::MainPage>())) {
+            __debugbreak();
+        }
+        Window::Current().Activate();
     }
 }

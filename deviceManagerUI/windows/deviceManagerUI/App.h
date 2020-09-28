@@ -12,7 +12,7 @@ namespace winrt::deviceManagerUI::implementation
         void OnLaunched(activation::LaunchActivatedEventArgs const&);
         void OnSuspending(IInspectable const&, Windows::ApplicationModel::SuspendingEventArgs const&);
         void OnNavigationFailed(IInspectable const&, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const&);
-        void OnFileActivated(Windows::ApplicationModel::Activation::IFileActivatedEventArgs const& args);
+        void OnFileActivated(Windows::ApplicationModel::Activation::FileActivatedEventArgs const& args);
       private:
         using super = AppT<App>;
     };

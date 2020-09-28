@@ -17,24 +17,13 @@ namespace deviceManagerUI
     REACT_MODULE(NativeModule);
     struct NativeModule
     {
-        NativeModule() {
-            registerForFileActivationEvents([&](winrt::Microsoft::ReactNative::JSValue& val) {
-                OnFileActivated(val);
-            });
-        }
-
         REACT_METHOD(Init, L"init");
         void Init() noexcept {
-            /*auto dispatcher = winrt::Windows::ApplicationModel::Core::CoreApplication::MainView().Dispatcher();
-            if (dispatcher) {
-                co_await dispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
-                                             []() {
-                    auto currentWindow = winrt::Windows::UI::Xaml::Window::Current();
-                    if (currentWindow) {
-                        // todo: stuff
-                    }
-                });
-            }*/
+            registerForFileActivationEvents([&](winrt::Microsoft::ReactNative::JSValue& val) {
+                if (OnFileActivated) {
+                    OnFileActivated(val);
+                }
+            });
         }
 
         REACT_EVENT(OnFileActivated, L"onFileActivated");

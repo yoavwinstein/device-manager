@@ -91,6 +91,7 @@ const App = () => {
 
   function onFileActivated(fileContent: string) {
     let parsedRootDevice: DeviceType = JSON.parse(fileContent);
+    setSelectedDevice(null);
     setRootDevice(parsedRootDevice);
   }
 
