@@ -42,12 +42,14 @@ static std::map<DEVPROPTYPE, std::function<FuncProto>> typeToDataConverterMap = 
     } },
 };
 
-DevicePropertyData getDevicePropertyData(DEVINST deviceInstance, DEVPROPKEY propertyKey)
-{
+DevicePropertyData getDevicePropertyData(DEVINST deviceInstance, DEVPROPKEY propertyKey) {
     DEVPROPTYPE type;
     ULONG size{};
     CONFIGRET result = CM_Get_DevNode_Property(deviceInstance, &propertyKey, &type, nullptr, &size, 0);
     if (result != CR_BUFFER_SMALL) {
+        if (result == CR_NO_SUCH_VALUE) {
+            return std::monostate{};
+        }
         throw DeviceManagerUtils::CMException(result);
     }
     auto typeToDataFuncIter = typeToDataConverterMap.find(type);
